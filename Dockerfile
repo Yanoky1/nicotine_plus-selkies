@@ -1,6 +1,8 @@
 FROM ghcr.io/linuxserver/baseimage-selkies:debiantrixie
 
-ENV TITLE="Nicotine+"
+ENV TITLE="Nicotine+" \
+    CUSTOM_PORT="6089" \
+    CUSTOM_HTTPS_PORT="6090"
 
 # ---------------------------------------------------------
 # Nicotine+ из репозитория Debian (GTK4, тянет python3-gi сам)
@@ -19,5 +21,5 @@ RUN apt-get update && \
 # ---------------------------------------------------------
 COPY root /
 
-EXPOSE 3001
+EXPOSE 6090
 VOLUME /config

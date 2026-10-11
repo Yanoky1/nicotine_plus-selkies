@@ -5,11 +5,7 @@ services:
       dockerfile: Dockerfile
     image: nicotine-selkies:latest
     container_name: nicotine-selkies
-
-    ports:
-      - "6090:3001"
-      - "64034:64034"
-      - "64035:64035"
+    network_mode: host
 
     environment:
       TITLE: "Nicotine+"
