@@ -1,0 +1,22 @@
+#!/usr/bin/env bash
+set -e
+
+export XDG_RUNTIME_DIR="/config/.XDG"
+
+mkdir -p "$XDG_RUNTIME_DIR"
+chmod 700 "$XDG_RUNTIME_DIR" 2>/dev/null || true
+
+if ! command -v nicotine > /dev/null 2>&1; then
+    echo "ERROR: nicotine not found!"
+    exit 1
+fi
+
+# Не поднимаем повторно, если уже живёт
+if pgrep -f "bin/nicotine" > /dev/null 2>&1; then
+    echo "Nicotine+ already running, skipping..."
+    exit 0
+fi
+
+# GTK4 нативно умеет Wayland, бэкенд не форсируем
+echo "Launching Nicotine+..."
+nicotine &

@@ -1,0 +1,32 @@
+#!/usr/bin/env bash
+echo "Setting up Openbox autostart for Nicotine+..."
+mkdir -p /config/.config/openbox
+
+cat << 'AUTOSTART' > /config/.config/openbox/autostart
+st &
+
+if ! pgrep -f "bin/nicotine" > /dev/null 2>&1; then
+    export GDK_BACKEND=x11
+    nicotine &
+fi
+AUTOSTART
+
+# Первичный конфиг Nicotine+ (только если его ещё нет — дальше правится из GUI)
+NCFG=/config/.config/nicotine/config
+if [ ! -f "$NCFG" ]; then
+    echo "Seeding initial Nicotine+ config..."
+    mkdir -p /config/.config/nicotine
+    cat << 'CONF' > "$NCFG"
+[server]
+portrange = (64034, 64035)
+upnp = False
+
+[transfers]
+downloaddir = /downloads
+incompletedir = /downloads/.incomplete
+shared = [('Organize', '/shared')]
+CONF
+fi
+
+chown -R 1000:1000 /config/.config
+chmod +x /config/.config/openbox/autostart

@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+set -e
+
+if ! command -v nicotine > /dev/null 2>&1; then
+    echo "ERROR: nicotine not found!"
+    exit 1
+fi
+
+if pgrep -f "bin/nicotine" > /dev/null 2>&1; then
+    echo "Nicotine+ already running, skipping..."
+    exit 0
+fi
+
+export GDK_BACKEND=x11
+echo "Launching Nicotine+..."
+nicotine &

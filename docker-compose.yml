@@ -1,0 +1,25 @@
+services:
+  nicotine-selkies:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: nicotine-selkies:latest
+    container_name: nicotine-selkies
+
+    ports:
+      - "6090:3001"
+      - "64034:64034"
+      - "64035:64035"
+
+    environment:
+      TITLE: "Nicotine+"
+      PUID: "1000"
+      PGID: "1000"
+
+    volumes:
+      - ./config:/config
+      - /mnt/4TB/Media/Music/SoulSeekQT:/downloads
+      - /mnt/4TB/Media/Music/organize:/shared
+
+    shm_size: 1gb
+    restart: unless-stopped
